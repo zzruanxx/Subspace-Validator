@@ -10,8 +10,11 @@ from subspace_verifier import SubspaceVerifier, create_constraint_function, gene
 import os
 
 
-# Custom JSON encoder to handle numpy types
-class NumpyEncoder(json.JSONEncoder):
+from flask.json.provider import DefaultJSONProvider
+
+
+# Custom JSON provider to handle numpy types
+class NumpyJSONProvider(DefaultJSONProvider):
     def default(self, obj):
         if isinstance(obj, np.integer):
             return int(obj)
@@ -21,11 +24,11 @@ class NumpyEncoder(json.JSONEncoder):
             return obj.tolist()
         if isinstance(obj, np.bool_):
             return bool(obj)
-        return super(NumpyEncoder, self).default(obj)
+        return super().default(obj)
 
 
 app = Flask(__name__, static_folder='../static', static_url_path='/static')
-app.json_encoder = NumpyEncoder
+app.json = NumpyJSONProvider(app)
 CORS(app)
 
 

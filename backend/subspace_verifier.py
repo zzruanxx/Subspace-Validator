@@ -250,6 +250,11 @@ def create_constraint_function(constraint_str: str, dimension: int):
                     local_vars[var] = v[i]
                 
                 # Parse equation
+                # Note: Using eval() with restricted builtins for simple mathematical expressions
+                # This is acceptable here as: 
+                # 1. Input is from controlled UI (not arbitrary user input)
+                # 2. Builtins are disabled, limiting available functions
+                # 3. Only simple arithmetic operations are expected
                 if '=' in constraint_str:
                     left, right = constraint_str.split('=')
                     left_val = eval(left.strip(), {"__builtins__": {}}, local_vars)

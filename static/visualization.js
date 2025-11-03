@@ -2,7 +2,8 @@
 
 function visualizeSubspace(vectors, isSubspace, constraint) {
     // Only visualize for 2D
-    if (currentDimension !== 2) {
+    // Note: currentDimension is defined in app.js and must be loaded first
+    if (typeof currentDimension === 'undefined' || currentDimension !== 2) {
         document.getElementById('visualization').style.display = 'none';
         return;
     }
