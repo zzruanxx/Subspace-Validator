@@ -224,18 +224,37 @@ function drawVector(ctx, vector, originX, originY, scale, index, isSubspace) {
 function updateVizInfo(vectors, isSubspace, constraint) {
     const infoDiv = document.getElementById('viz-info');
     
-    let info = '<strong>Visualização 2D:</strong><br>';
-    info += `<strong>Vetores:</strong> ${vectors.length} vetores plotados<br>`;
+    // Clear existing content
+    infoDiv.innerHTML = '';
+    
+    // Create elements programmatically to avoid XSS
+    const header = document.createElement('strong');
+    header.textContent = 'Visualização 2D:';
+    infoDiv.appendChild(header);
+    infoDiv.appendChild(document.createElement('br'));
+    
+    const vectorInfo = document.createElement('span');
+    const vectorLabel = document.createElement('strong');
+    vectorLabel.textContent = 'Vetores: ';
+    vectorInfo.appendChild(vectorLabel);
+    vectorInfo.appendChild(document.createTextNode(`${vectors.length} vetores plotados`));
+    infoDiv.appendChild(vectorInfo);
+    infoDiv.appendChild(document.createElement('br'));
     
     if (constraint && constraint.trim() !== '') {
-        info += `<strong>Restrição:</strong> ${constraint}<br>`;
+        const constraintInfo = document.createElement('span');
+        const constraintLabel = document.createElement('strong');
+        constraintLabel.textContent = 'Restrição: ';
+        constraintInfo.appendChild(constraintLabel);
+        constraintInfo.appendChild(document.createTextNode(constraint));
+        infoDiv.appendChild(constraintInfo);
+        infoDiv.appendChild(document.createElement('br'));
     }
     
-    if (isSubspace) {
-        info += '<span style="color: green;">✓ O conjunto forma um subespaço (região/linha verde)</span>';
-    } else {
-        info += '<span style="color: red;">✗ O conjunto NÃO forma um subespaço</span>';
-    }
-    
-    infoDiv.innerHTML = info;
+    const resultSpan = document.createElement('span');
+    resultSpan.style.color = isSubspace ? 'green' : 'red';
+    resultSpan.textContent = isSubspace 
+        ? '✓ O conjunto forma um subespaço (região/linha verde)'
+        : '✗ O conjunto NÃO forma um subespaço';
+    infoDiv.appendChild(resultSpan);
 }

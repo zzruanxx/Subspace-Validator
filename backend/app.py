@@ -81,8 +81,10 @@ def verify_subspace():
         return jsonify(result)
         
     except Exception as e:
+        # Log error for debugging but don't expose stack trace to client
+        app.logger.error(f"Error in verify_subspace: {e}", exc_info=True)
         return jsonify({
-            'error': str(e),
+            'error': 'Erro interno ao processar requisição',
             'message': 'Erro ao verificar subespaço'
         }), 400
 
@@ -100,8 +102,10 @@ def random_example():
         example = generate_random_example(dimension)
         return jsonify(example)
     except Exception as e:
+        # Log error for debugging but don't expose stack trace to client
+        app.logger.error(f"Error in random_example: {e}", exc_info=True)
         return jsonify({
-            'error': str(e),
+            'error': 'Erro interno ao processar requisição',
             'message': 'Erro ao gerar exemplo'
         }), 400
 
@@ -114,4 +118,6 @@ def health():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # Debug mode should only be enabled in development
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
