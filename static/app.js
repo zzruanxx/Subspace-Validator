@@ -89,7 +89,13 @@ async function verifySubspace() {
     // Show loading state
     const resultsDiv = document.getElementById('results');
     resultsDiv.style.display = 'block';
-    resultsDiv.innerHTML = '<p>Verificando...</p><div class="loading"></div>';
+    
+    const summaryDiv = document.getElementById('summary');
+    summaryDiv.className = 'summary';
+    summaryDiv.innerHTML = '<p>Verificando...</p><div class="loading"></div>';
+    
+    const stepsDiv = document.getElementById('steps');
+    stepsDiv.innerHTML = '';
     
     try {
         const response = await fetch(`${API_BASE}/api/verify`, {
@@ -118,7 +124,9 @@ async function verifySubspace() {
         
     } catch (error) {
         console.error('Error:', error);
-        resultsDiv.innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
+        const summaryDiv = document.getElementById('summary');
+        summaryDiv.className = 'summary failure';
+        summaryDiv.innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
     }
 }
 

@@ -24,7 +24,7 @@ class NumpyEncoder(json.JSONEncoder):
         return super(NumpyEncoder, self).default(obj)
 
 
-app = Flask(__name__, static_folder='../static', static_url_path='')
+app = Flask(__name__, static_folder='../static', static_url_path='/static')
 app.json_encoder = NumpyEncoder
 CORS(app)
 
