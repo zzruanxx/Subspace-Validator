@@ -126,7 +126,12 @@ async function verifySubspace() {
         console.error('Error:', error);
         const summaryDiv = document.getElementById('summary');
         summaryDiv.className = 'summary failure';
-        summaryDiv.innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
+        // Use textContent to prevent XSS
+        const errorPara = document.createElement('p');
+        errorPara.style.color = 'red';
+        errorPara.textContent = `Erro: ${error.message}`;
+        summaryDiv.innerHTML = '';
+        summaryDiv.appendChild(errorPara);
     }
 }
 
