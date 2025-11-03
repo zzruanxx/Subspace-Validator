@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Subespaços - ℝⁿ</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Verificador de Subespaços Vetoriais</h1>
+            <p class="subtitle">Determine se um conjunto é um subespaço de ℝⁿ</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Section -->
+            <div class="input-section card">
+                <h2>📝 Entrada de Dados</h2>
+                
+                <div class="form-group">
+                    <label for="dimension">Dimensão do Espaço (n):</label>
+                    <select id="dimension" onchange="updateDimension()">
+                        <option value="2" selected>2 (ℝ²)</option>
+                        <option value="3">3 (ℝ³)</option>
+                        <option value="4">4 (ℝ⁴)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="constraint">Restrição (opcional):</label>
+                    <input type="text" id="constraint" placeholder="Ex: x + y = 0, y = 2*x, x + y + z = 0">
+                    <small>Deixe vazio para conjunto livre. Use x, y, z, w para variáveis.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Vetores do Conjunto:</label>
+                    <div id="vectors-container">
+                        <!-- Dynamic vector inputs will be added here -->
+                    </div>
+                    <button onclick="addVector()" class="btn btn-secondary">➕ Adicionar Vetor</button>
+                </div>
+
+                <div class="button-group">
+                    <button onclick="verifySubspace()" class="btn btn-primary">✓ Verificar Subespaço</button>
+                    <button onclick="loadRandomExample()" class="btn btn-secondary">🎲 Exemplo Aleatório</button>
+                    <button onclick="clearAll()" class="btn btn-secondary">🗑️ Limpar</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section card" id="results" style="display: none;">
+                <h2>📊 Resultados da Verificação</h2>
+                
+                <div id="summary" class="summary"></div>
+                
+                <div class="steps-container">
+                    <h3>📝 Verificação Passo a Passo</h3>
+                    <div id="steps"></div>
+                </div>
+            </div>
+
+            <!-- Visualization Section -->
+            <div class="visualization-section card" id="visualization" style="display: none;">
+                <h2>📐 Visualização Geométrica (2D)</h2>
+                <canvas id="canvas" width="600" height="600"></canvas>
+                <div id="viz-info"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Verificador de Subespaços Vetoriais - Desenvolvido com Python + JavaScript</p>
+        </footer>
+    </div>
+
+    <script src="static/app.js"></script>
+    <script src="static/visualization.js"></script>
+</body>
+</html>
